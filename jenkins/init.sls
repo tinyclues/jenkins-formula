@@ -16,7 +16,7 @@ jenkins_user:
       - group: jenkins_group
   user.present:
     - name: {{ jenkins.user }}
-    - groups: {{ jenkins.group.extend(jenkins.additional_groups) }}
+    - groups: {{ jenkins.additional_groups }}
     - system: True
     - home: {{ jenkins.home }}
     - shell: /bin/bash
