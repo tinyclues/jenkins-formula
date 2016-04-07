@@ -17,7 +17,7 @@ jenkins_updates_file:
   file.directory:
     - name: {{ "{0}/updates".format(jenkins.home) }}
     - user: {{ jenkins.user }}
-    - group: {{ jenkins.home_group }}
+    - group: {{ jenkins.group }}
     - mode: 755
 
   pkg.installed:
@@ -50,7 +50,7 @@ jenkins_disable_plugin_{{ plugin }}:
   file.managed:
     - name: {{ jenkins.home }}/plugins/{{ plugin }}.jpi.disabled
     - user: {{ jenkins.user }}
-    - group: {{ jenkins.home_group }}
+    - group: {{ jenkins.group }}
     - contents: ''
     - watch_in:
       - cmd: restart_jenkins

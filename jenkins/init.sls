@@ -1,17 +1,27 @@
 {% from "jenkins/map.jinja" import jenkins with context %}
 
+jenkins_group:
+  group.present:
+    - name: {{ jenkins.group }}
+    - system: True
+
 jenkins_user:
+  file.directory:
+    - name: {{ jenkins.home }}
+    - user: {{ jenkins.user }}
+    - group: {{ jenkins.group }}
+    - mode: 0755
+    - require:
+      - user: jenkins_user
+      - group: jenkins_group
   user.present:
     - name: {{ jenkins.user }}
-    - groups: {{ jenkins.group }}
+    - groups: {{ jenkins.group.extend(jenkins.additional_groups) }}
     - system: True
     - home: {{ jenkins.home }}
     - shell: /bin/bash
-  {% if jenkins.home_group != 'jenkins' %}
-   file.directory:
-     - name: {{ jenkins.home }}
-     - group: {{ jenkins.home_group }}
-  {% endif %}
+    - require:
+      - group: jenkins_group
 
 
 jenkins:

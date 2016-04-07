@@ -2,10 +2,10 @@ jenkins:
   lookup:
     port: 80
     home: /var/lib/jenkins
-    home_group: www-data
     user: jenkins
-    group:
-      - jenkins
+    group: jenkins
+    additional_groups:
+      - docker
       - www-data
     server_name: localhost
     master_url: http://localhost:8080
